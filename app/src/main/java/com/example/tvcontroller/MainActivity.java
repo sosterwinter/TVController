@@ -102,6 +102,18 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
 
+            case R.id.power_off:
+
+
+                // IMPORTANTE NOCH ZU BEARBEITEN
+                // User chose the "power_off" action. send shutdown request to server
+
+
+                Intent intent_power = new Intent(this, PowerActivity.class);
+                startActivity(intent_power);
+
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
