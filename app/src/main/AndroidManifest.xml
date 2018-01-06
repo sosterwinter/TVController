@@ -16,22 +16,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".settings"
-                  android:parentActivityName="com.example.tvcontroller.MainActivity" >
-
-        <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.tvcontroller.MainActivity" />
-            </activity>
-        <activity android:name=".favorite"
-                  android:parentActivityName="com.example.tvcontroller.MainActivity" >
+        <activity
+            android:name=".settings"
+            android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tvcontroller.MainActivity" />
         </activity>
+        <activity
+            android:name=".favorite"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.tvcontroller.MainActivity" />
+        </activity>
+        <activity android:name=".PowerActivity"></activity>
     </application>
 
 </manifest>
