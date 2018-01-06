@@ -7,14 +7,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
+    boolean paused = false;
+    ImageButton toggleButtonPause;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,8 +28,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        //Pause Button
+
+        this.toggleButtonPause = (ImageButton) findViewById(R.id.imageButtonPause);
+        toggleButtonPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(paused == true){
+                    //Resume
+                    paused=false;
+                    toggleButtonPause.setImageResource(R.drawable.ic_pause);
+                    //Image auf Pause
+                }else{
+                    //Pause the tv
+                    paused=true;
+                    //Image auf Play
+                    toggleButtonPause.setImageResource(R.drawable.ic_play);
+
+                }
+            }
+        });
         //Toggle Button
-        final ToggleButton myToggleButton = (ToggleButton)findViewById(R.id.toggleButton);
+        final ToggleButton myToggleButton = (ToggleButton)findViewById(R.id.toggleButtonMute);
         myToggleButton.setChecked(true);
         myToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -122,5 +146,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickPrev(View view){
+        //Send request channel -1 to server
+        //channelMain=PositionInListe
+    }
 
+    public void onClickNext(View view){
+        //Send request channel +1 to server
+        //channelMain=PositionInListe
+    }
+
+    public void onClickPause(View view){
+        //Send request pause to server
+        //timeShiftPause=
+
+    }
 }
