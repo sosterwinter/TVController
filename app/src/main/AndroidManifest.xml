@@ -10,11 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".settings"
@@ -34,7 +30,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.tvcontroller.MainActivity" />
         </activity>
-        <activity android:name=".PowerActivity"></activity>
+        <activity android:name=".PowerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
