@@ -138,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
 
+            case R.id.managefavorites:
+
+                Intent intent_managefavorites = new Intent (this, managefavorites.class);
+                startActivity(intent_managefavorites);
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
