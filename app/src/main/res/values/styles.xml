@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+<!--
     <style name="Widget.Button.Toggle" parent="android:Widget">
         <item name="android:background">@drawable/ic_toggle_bg</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
@@ -18,4 +18,5 @@
         <item name="android:textOn"></item>
         <item name="android:textOff"></item>
     </style>
+    -->
 </resources>

@@ -16,38 +16,76 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Creating member variables
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-    boolean paused = false;
-    ImageButton toggleButtonPause;
+    private boolean paused = false, muted = false;
+    ImageButton imageButtonPause, imageButtonMute;
+    Toolbar myToolbar;
+    SeekBar seekBarVolume;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //Initialisierung
+        this.imageButtonPause = (ImageButton) findViewById(R.id.imageButtonPause);
+        this.myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        this.imageButtonMute = (ImageButton) findViewById(R.id.imageButtonMute);
+        this.seekBarVolume = (SeekBar)findViewById(R.id.seekBar1);
+
         //Set toolbar as actionbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
         //Pause Button
-
-        this.toggleButtonPause = (ImageButton) findViewById(R.id.imageButtonPause);
-        toggleButtonPause.setOnClickListener(new View.OnClickListener() {
+        if(paused == true){
+            imageButtonPause.setImageResource(R.drawable.ic_play);
+        }else{
+            imageButtonPause.setImageResource(R.drawable.ic_pause);
+        }
+        imageButtonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(paused == true){
                     //Resume
                     paused=false;
-                    toggleButtonPause.setImageResource(R.drawable.ic_pause);
+                    imageButtonPause.setImageResource(R.drawable.ic_pause);
                     //Image auf Pause
                 }else{
                     //Pause the tv
                     paused=true;
                     //Image auf Play
-                    toggleButtonPause.setImageResource(R.drawable.ic_play);
+                    imageButtonPause.setImageResource(R.drawable.ic_play);
 
                 }
             }
         });
+        //Mute Button
+        if(muted == true){
+            imageButtonMute.setImageResource(R.drawable.ic_mute_off);
+        }else{
+            imageButtonMute.setImageResource(R.drawable.ic_mute_on);
+        }
+        imageButtonMute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(muted == true && seekBarVolume.getProgress() > 0){
+                    //Resume
+                    muted=false;
+                    imageButtonMute.setImageResource(R.drawable.ic_mute_on);
+                    //Image auf Pause
+                }else{
+                    //Pause the tv
+                    muted=true;
+                    //Image auf Play
+                    imageButtonMute.setImageResource(R.drawable.ic_mute_off);
+
+                }
+            }
+        });
+        /*
         //Toggle Button
         final ToggleButton myToggleButton = (ToggleButton)findViewById(R.id.toggleButtonMute);
         myToggleButton.setChecked(true);
@@ -64,22 +102,24 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
-
+        */
         //Setting up Seekbar + Listener
-        SeekBar sb = (SeekBar)findViewById(R.id.seekBar1);
 
-        sb.setProgress(50);
 
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        seekBarVolume.setProgress(50);
+
+        seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             int progress_value;
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 progress_value = progress;
                 if(progress_value == 0){
-                    myToggleButton.setChecked(false);
+                    muted = true;
+                    imageButtonMute.setImageResource(R.drawable.ic_mute_off);
                 }else{
-                    myToggleButton.setChecked(true);
+                    muted = false;
+                    imageButtonMute.setImageResource(R.drawable.ic_mute_on);
                 }
             }
             @Override
@@ -161,9 +201,5 @@ public class MainActivity extends AppCompatActivity {
         //channelMain=PositionInListe
     }
 
-    public void onClickPause(View view){
-        //Send request pause to server
-        //timeShiftPause=
 
-    }
 }

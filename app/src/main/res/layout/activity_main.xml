@@ -24,23 +24,22 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:max="100"
-        app:layout_constraintBottom_toBottomOf="@+id/toggleButtonMute"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonMute"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonMute"
-        app:layout_constraintTop_toTopOf="@+id/toggleButtonMute" />
+        app:layout_constraintStart_toEndOf="@+id/imageButtonMute"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonMute" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonMute"
-        style="@style/toggleButton"
+    <ImageButton
+        android:id="@+id/imageButtonMute"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_toggle_bg"
-        android:minHeight="0dp"
-        android:minWidth="0dp"
+        android:background="@android:color/transparent"
+
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
@@ -52,22 +51,39 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonMute"
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonMute"
         app:srcCompat="@drawable/ard_little" />
-
+<!--
     <ImageButton
+<<<<<<< HEAD
         android:id="@+id/imageButtonPause"
         android:contentDescription="@string/button_pause"
+=======
+        android:id="@+id/imageButtonMute"
+>>>>>>> 35a8edd260c587973dffc8b47faf720ab948d9af
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_gravity="right"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
         android:onClick="onClickPause"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:srcCompat="@drawable/ic_pause" />
+        -->
+    <ImageButton
+        android:id="@+id/imageButtonPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <ImageButton
         android:id="@+id/imageButtonNext"
@@ -77,6 +93,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
         android:onClick="onClickNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.282"
@@ -92,6 +109,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
+        android:background="@android:color/transparent"
         android:onClick="onClickPrev"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonPause"
         app:layout_constraintHorizontal_bias="0.641"
