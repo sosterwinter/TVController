@@ -4,4 +4,11 @@
     <string name="action_settings">Settings</string>
     <string name="power_off">Shut Down</string>
     <string name="manage_favorites">Manage favorites</string>
+    <string name="my_toolbar">Toolbar</string>
+    <string name="channel_pic">Channel picture</string>
+    <string name="button_pause">Pause Button</string>
+    <string name="button_next">Next Button</string>
+    <string name="button_prev">Previous Button</string>
+    <string name="favorite_scrollview">Favoriten Scrollbar</string>
+    <string name="favorite_layout">Favoriten Layout</string>
 </resources>

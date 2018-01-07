@@ -13,6 +13,7 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/managefavorites"
+        android:icon="@drawable/ic_favorite_red"
         android:title="@string/manage_favorites"
         app:showAsAction="never"/>
     <item
