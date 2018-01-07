@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 public class PowerActivity extends AppCompatActivity {
 
     @Override
