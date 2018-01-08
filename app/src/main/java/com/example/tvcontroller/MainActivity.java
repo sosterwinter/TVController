@@ -1,6 +1,8 @@
 package com.example.tvcontroller;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -23,18 +26,22 @@ public class MainActivity extends AppCompatActivity {
     ImageButton imageButtonPause, imageButtonMute;
     Toolbar myToolbar;
     SeekBar seekBarVolume;
+    HttpRequestAsync task;
+    HttpRequest httpReq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //Initialisierung
         this.imageButtonPause = (ImageButton) findViewById(R.id.imageButtonPause);
         this.myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         this.imageButtonMute = (ImageButton) findViewById(R.id.imageButtonMute);
         this.seekBarVolume = (SeekBar)findViewById(R.id.seekBar1);
+        this.httpReq = new HttpRequest("10.0.2.2", 1000, false);
+        this.task = new HttpRequestAsync(this.httpReq);
+
 
         //Set toolbar as actionbar
         setSupportActionBar(myToolbar);
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         //Pause Button
         if(paused == true){
             imageButtonPause.setImageResource(R.drawable.ic_play);
+
         }else{
             imageButtonPause.setImageResource(R.drawable.ic_pause);
         }
@@ -49,11 +57,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(paused == true){
+                    //task.execute("timeShiftPause=");
+                    task.execute("showPip=0");
                     //Resume
                     paused=false;
                     imageButtonPause.setImageResource(R.drawable.ic_pause);
                     //Image auf Pause
                 }else{
+                    //task.execute("timeShiftPlay=0");
+
+                    task.execute("channelMain=8a&showPip=1");
                     //Pause the tv
                     paused=true;
                     //Image auf Play
