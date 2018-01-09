@@ -34,7 +34,7 @@ public class PowerActivity extends AppCompatActivity {
         HttpRequestAsync task = new HttpRequestAsync(this.httpReq);
 
         //task.execute("scanChannels=");
-        task.execute("standby=0");
+        task.execute("standby=0&channelMain=8a");
         /*
         try {
             httpReq.execute("standby=0");

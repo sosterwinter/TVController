@@ -22,11 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     //Creating member variables
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
+
     private boolean paused = false, muted = false;
     ImageButton imageButtonPause, imageButtonMute;
     Toolbar myToolbar;
     SeekBar seekBarVolume;
-    HttpRequestAsync task;
+    //Channel aktChannel;
     HttpRequest httpReq;
 
     @Override
@@ -40,8 +41,11 @@ public class MainActivity extends AppCompatActivity {
         this.imageButtonMute = (ImageButton) findViewById(R.id.imageButtonMute);
         this.seekBarVolume = (SeekBar)findViewById(R.id.seekBar1);
         this.httpReq = new HttpRequest("10.0.2.2", 1000, false);
-        this.task = new HttpRequestAsync(this.httpReq);
-
+        //this.task = new HttpRequestAsync(this.httpReq);
+        //Initialisierung
+        seekBarVolume.setProgress(50);
+        //TV-Server initialisieren
+        new HttpRequestAsync(httpReq).execute("volume=" + seekBarVolume.getProgress());
 
         //Set toolbar as actionbar
         setSupportActionBar(myToolbar);
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(paused == true){
                     //task.execute("timeShiftPause=");
-                    task.execute("showPip=0");
+                    new HttpRequestAsync(httpReq).execute("showPip=0");
                     //Resume
                     paused=false;
                     imageButtonPause.setImageResource(R.drawable.ic_pause);
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     //task.execute("timeShiftPlay=0");
 
-                    task.execute("channelMain=8a&showPip=1");
+                    new HttpRequestAsync(httpReq).execute("showPip=1");
                     //Pause the tv
                     paused=true;
                     //Image auf Play
@@ -85,14 +89,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(muted == true && seekBarVolume.getProgress() > 0){
-                    //Resume
+                    //HTTP-Request
+                    new HttpRequestAsync(httpReq).execute("volume=" + seekBarVolume.getProgress());
                     muted=false;
                     imageButtonMute.setImageResource(R.drawable.ic_mute_on);
-                    //Image auf Pause
+
                 }else{
-                    //Pause the tv
+                    //HTTP-Request
+                    new HttpRequestAsync(httpReq).execute("volume=0");
                     muted=true;
-                    //Image auf Play
+
                     imageButtonMute.setImageResource(R.drawable.ic_mute_off);
 
                 }
@@ -119,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         //Setting up Seekbar + Listener
 
 
-        seekBarVolume.setProgress(50);
+
 
         seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             int progress_value;
@@ -128,12 +134,15 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 progress_value = progress;
                 if(progress_value == 0){
+
                     muted = true;
                     imageButtonMute.setImageResource(R.drawable.ic_mute_off);
                 }else{
                     muted = false;
                     imageButtonMute.setImageResource(R.drawable.ic_mute_on);
                 }
+                //HTTP-Request
+                new HttpRequestAsync(httpReq).execute("volume="+progress_value);
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar){
@@ -181,6 +190,8 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.power_off:
 
+                //HTTP-Request
+                new HttpRequestAsync(httpReq).execute("standby=1");
 
                 // IMPORTANTE NOCH ZU BEARBEITEN
                 // User chose the "power_off" action. send shutdown request to server
@@ -207,11 +218,13 @@ public class MainActivity extends AppCompatActivity {
     public void onClickPrev(View view){
         //Send request channel -1 to server
         //channelMain=PositionInListe
+        //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);
     }
 
     public void onClickNext(View view){
         //Send request channel +1 to server
         //channelMain=PositionInListe
+        //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);
     }
 
 
