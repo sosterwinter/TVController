@@ -23,12 +23,13 @@ public class MainActivity extends AppCompatActivity {
     //Creating member variables
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
-    private boolean paused = false, muted = false;
+    //private boolean paused = false, muted = false;
     ImageButton imageButtonPause, imageButtonMute;
     Toolbar myToolbar;
     SeekBar seekBarVolume;
     //Channel aktChannel;
     HttpRequest httpReq;
+    Singleton singleton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +43,22 @@ public class MainActivity extends AppCompatActivity {
         this.seekBarVolume = (SeekBar)findViewById(R.id.seekBar1);
         this.httpReq = new HttpRequest("10.0.2.2", 1000, false);
         //this.task = new HttpRequestAsync(this.httpReq);
+        this.singleton = Singleton.getInstance();
         //Initialisierung
-        seekBarVolume.setProgress(50);
+
         //TV-Server initialisieren
-        new HttpRequestAsync(httpReq).execute("volume=" + seekBarVolume.getProgress());
+        if(singleton.getMuted()==false) {
+            seekBarVolume.setProgress(singleton.getVolume());
+            new HttpRequestAsync(httpReq).execute("volume=" + singleton.getVolume());
+        }else{
+            new HttpRequestAsync(httpReq).execute("volume=" + seekBarVolume.getProgress());
+        }
 
         //Set toolbar as actionbar
         setSupportActionBar(myToolbar);
 
         //Pause Button
-        if(paused == true){
+        if(singleton.getPaused() == true){
             imageButtonPause.setImageResource(R.drawable.ic_play);
 
         }else{
@@ -60,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
         imageButtonPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(paused == true){
+                if(singleton.getPaused() == true){
                     //task.execute("timeShiftPause=");
                     new HttpRequestAsync(httpReq).execute("showPip=0");
                     //Resume
-                    paused=false;
+                    singleton.setPaused(false);
                     imageButtonPause.setImageResource(R.drawable.ic_pause);
                     //Image auf Pause
                 }else{
@@ -72,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
                     new HttpRequestAsync(httpReq).execute("showPip=1");
                     //Pause the tv
-                    paused=true;
+                    singleton.setPaused(true);
                     //Image auf Play
                     imageButtonPause.setImageResource(R.drawable.ic_play);
 
@@ -80,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Mute Button
-        if(muted == true){
+        if(singleton.getMuted() == true){
             imageButtonMute.setImageResource(R.drawable.ic_mute_off);
         }else{
             imageButtonMute.setImageResource(R.drawable.ic_mute_on);
@@ -88,16 +95,17 @@ public class MainActivity extends AppCompatActivity {
         imageButtonMute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(muted == true && seekBarVolume.getProgress() > 0){
+                if(singleton.getMuted() == true && singleton.getVolume() > 0){
                     //HTTP-Request
-                    new HttpRequestAsync(httpReq).execute("volume=" + seekBarVolume.getProgress());
-                    muted=false;
+                    new HttpRequestAsync(httpReq).execute("volume=" + singleton.getVolume());
+                    singleton.setMuted(false);
                     imageButtonMute.setImageResource(R.drawable.ic_mute_on);
 
                 }else{
                     //HTTP-Request
                     new HttpRequestAsync(httpReq).execute("volume=0");
-                    muted=true;
+                    singleton.setVolume(0);
+                    singleton.setMuted(true);
 
                     imageButtonMute.setImageResource(R.drawable.ic_mute_off);
 
@@ -122,27 +130,27 @@ public class MainActivity extends AppCompatActivity {
 
         });
         */
-        //Setting up Seekbar + Listener
+        //Setting up Seekbar Listener
 
 
 
 
         seekBarVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-            int progress_value;
+            //int progress_value;
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
-                progress_value = progress;
-                if(progress_value == 0){
+                singleton.setVolume(progress);
+                if(singleton.getVolume() == 0){
 
-                    muted = true;
+                    singleton.setMuted(true);
                     imageButtonMute.setImageResource(R.drawable.ic_mute_off);
                 }else{
-                    muted = false;
+                    singleton.setMuted(false);
                     imageButtonMute.setImageResource(R.drawable.ic_mute_on);
                 }
                 //HTTP-Request
-                new HttpRequestAsync(httpReq).execute("volume="+progress_value);
+                new HttpRequestAsync(httpReq).execute("volume="+singleton.getVolume());
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar){
@@ -151,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar){
 
-                if(progress_value != 0){
-                    Toast.makeText(MainActivity.this, "Volume: " + progress_value, Toast.LENGTH_SHORT).show();
+                if(singleton.getVolume() != 0){
+                    Toast.makeText(MainActivity.this, "Volume: " + singleton.getVolume(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
