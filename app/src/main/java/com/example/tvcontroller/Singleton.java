@@ -15,13 +15,22 @@ public class Singleton {
 
     }
     private int volume = 50;
-    private boolean muted = false, paused = false;
+    private int seekBarVolumeProgress = 50;
+    private boolean muted = false;
+    private boolean paused = false;
+
 
     public void setVolume(int volume){
         this.volume = volume;
     }
     public int getVolume(){
         return volume;
+    }
+    public void setSeekBarVolumeProgresse(int seekBarVolumeProgress){
+        this.seekBarVolumeProgress = seekBarVolumeProgress;
+    }
+    public int getSeekBarVolumeProgress(){
+        return seekBarVolumeProgress;
     }
     public void setMuted(boolean muted){
         this.muted = muted;

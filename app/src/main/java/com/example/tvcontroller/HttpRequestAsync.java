@@ -50,4 +50,9 @@ public class HttpRequestAsync extends AsyncTask<String, Integer, JSONObject> {
         return obj;
 
     }
+
+    @Override
+    protected void onPostExecute(JSONObject obj){
+
+    }
 }

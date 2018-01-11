@@ -47,12 +47,10 @@ public class MainActivity extends AppCompatActivity {
         //Initialisierung
 
         //TV-Server initialisieren
-        if(singleton.getMuted()==false) {
-            seekBarVolume.setProgress(singleton.getVolume());
-            new HttpRequestAsync(httpReq).execute("volume=" + singleton.getVolume());
-        }else{
-            new HttpRequestAsync(httpReq).execute("volume=" + seekBarVolume.getProgress());
-        }
+
+        seekBarVolume.setProgress(singleton.getSeekBarVolumeProgress());
+        new HttpRequestAsync(httpReq).execute("volume=" + singleton.getVolume());
+
 
         //Set toolbar as actionbar
         setSupportActionBar(myToolbar);
@@ -95,8 +93,9 @@ public class MainActivity extends AppCompatActivity {
         imageButtonMute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(singleton.getMuted() == true && singleton.getVolume() > 0){
+                if(singleton.getMuted() == true && seekBarVolume.getProgress() > 0){
                     //HTTP-Request
+                    singleton.setVolume(seekBarVolume.getProgress());
                     new HttpRequestAsync(httpReq).execute("volume=" + singleton.getVolume());
                     singleton.setMuted(false);
                     imageButtonMute.setImageResource(R.drawable.ic_mute_on);
@@ -105,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     //HTTP-Request
                     new HttpRequestAsync(httpReq).execute("volume=0");
                     singleton.setVolume(0);
+                    //seekBarVolume.setProgress(0);
                     singleton.setMuted(true);
 
                     imageButtonMute.setImageResource(R.drawable.ic_mute_off);
@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 singleton.setVolume(progress);
+                singleton.setSeekBarVolumeProgresse(progress);
                 if(singleton.getVolume() == 0){
 
                     singleton.setMuted(true);
