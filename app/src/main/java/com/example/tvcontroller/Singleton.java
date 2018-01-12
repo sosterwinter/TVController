@@ -1,5 +1,7 @@
 package com.example.tvcontroller;
 
+import java.util.ArrayList;
+
 /**
  * Created by Yannik on 11.01.2018.
  */
@@ -14,11 +16,22 @@ public class Singleton {
     private Singleton(){
 
     }
+
+
+
+    private ArrayList<Channel> channelList;
     private int volume = 50;
     private int seekBarVolumeProgress = 50;
     private boolean muted = false;
     private boolean paused = false;
 
+    public ArrayList<Channel> getChannelList() {
+        return channelList;
+    }
+
+    public void setChannelList(ArrayList<Channel> channelList) {
+        this.channelList = channelList;
+    }
 
     public void setVolume(int volume){
         this.volume = volume;
@@ -26,7 +39,7 @@ public class Singleton {
     public int getVolume(){
         return volume;
     }
-    public void setSeekBarVolumeProgresse(int seekBarVolumeProgress){
+    public void setSeekBarVolumeProgress(int seekBarVolumeProgress){
         this.seekBarVolumeProgress = seekBarVolumeProgress;
     }
     public int getSeekBarVolumeProgress(){

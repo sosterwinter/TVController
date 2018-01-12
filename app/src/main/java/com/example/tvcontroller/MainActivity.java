@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
                 singleton.setVolume(progress);
-                singleton.setSeekBarVolumeProgresse(progress);
+                singleton.setSeekBarVolumeProgress(progress);
                 if(singleton.getVolume() == 0){
 
                     singleton.setMuted(true);

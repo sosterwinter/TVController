@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class PowerActivity extends AppCompatActivity {
@@ -23,26 +24,53 @@ public class PowerActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private EditText txtResponse;
     private JSONObject json;
+    private Singleton singleton;
+    private ArrayList<Channel> channelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_power);
         httpReq = new HttpRequest("10.0.2.2", 1000, false);
-
+        this.singleton = Singleton.getInstance();
 
 
     }
 
-    public void onClickButton(View view) {
+    public void onClickButton(View view) throws JSONException {
 
         //Senderliste hier laden, standby=0, scanChannels=
         HttpRequestAsync task = new HttpRequestAsync(this.httpReq);
-
+        //channelList = singleton.getChannelList();
+        channelList = new ArrayList<Channel>();
         //task.execute("scanChannels=");
+        HttpRequestAsync async = new HttpRequestAsync(httpReq);
+        async.execute("scanChannels=");
+        try {
+            json = async.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
+        if(json.has("channels")){
+            JSONArray channels = json.getJSONArray("channels");
+            for(int i = 0; i < channels.length(); i++) {
+                JSONObject channel = channels.getJSONObject(i);
+                Channel realChannel = new Channel(channel.getInt("frequency"), channel.getString("channel"), channel.getInt("quality"), channel.getString("program"), channel.getString("provider"));
 
-        new HttpRequestAsync(this.httpReq).execute("standby=0&channelMain=8a");
+                channelList.add(realChannel);
+                //Log.d("HAHA", realChannel.getProvider());
+            }
+        }
+        singleton.setChannelList(channelList);
+
+        Log.d("LUL", singleton.getChannelList().get(1).getProvider());
+
+        Log.d("luls", "i did this");
+
+        new HttpRequestAsync(this.httpReq).execute("standby=0&channelMain=8a");//&channelMain=8a
 
         // json = new HttpRequestAsync(this.httpReq).;
 

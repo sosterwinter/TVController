@@ -15,6 +15,9 @@ import java.io.IOException;
  */
 
 public class HttpRequestAsync extends AsyncTask<String, Integer, JSONObject> {
+
+
+
     public static final String TAG = "ScanChannelsTask";
     private HttpRequest request;
     private Context context;
@@ -36,9 +39,10 @@ public class HttpRequestAsync extends AsyncTask<String, Integer, JSONObject> {
 //                Log.e(TAG, params[0] + " - " + this.request.getIpAddress());
 
                 obj = this.request.sendHttp(params[0]);
-
-//              Log.e(TAG, "Channel Scan almost finished...");
-                Log.e(TAG, obj.toString());
+               
+                String string = obj.toString(2);
+             // Log.d(TAG, "Channel Scan almost finished...");
+             //   Log.d(TAG, string);
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.e(TAG, e.getMessage());
