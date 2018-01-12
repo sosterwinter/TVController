@@ -5,14 +5,14 @@ package com.example.tvcontroller;
  */
 
 public class Channel {
-    int frequency;
-    String channelIdentifier;
-    int quality;
+    private int frequency;
+    private String channelIdentifier;
+    private int quality;
 
 
 
-    String program;
-    String provider;
+    private String program;
+    private String provider;
     public Channel(int frequency, String channel, int quality, String program, String provider){
         this.frequency = frequency;
         this.channelIdentifier = channel;

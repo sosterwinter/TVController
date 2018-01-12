@@ -17,6 +17,11 @@
         android:title="@string/manage_favorites"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/action_channellist"
+        android:icon="@drawable/ic_action_channellist"
+        android:title="@string/action_channellist"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/power_off"
         android:icon="@drawable/ic_power_button"
         android:title="@string/power_off"

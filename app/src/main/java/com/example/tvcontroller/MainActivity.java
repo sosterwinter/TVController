@@ -197,6 +197,15 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
 
+            case R.id.action_channellist:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                Intent intent_channellist = new Intent(this, Channellist.class);
+
+                startActivity(intent_channellist);
+
+                return true;
+
             case R.id.power_off:
 
                 //HTTP-Request
