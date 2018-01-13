@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton imageButtonPause, imageButtonMute, imageButtonPip;
     Toolbar myToolbar;
     SeekBar seekBarVolume;
-
+    Button switchPipChannel;
     HttpRequest httpReq;
     Singleton singleton;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Initialisierung
+        this.switchPipChannel = (Button)findViewById(R.id.buttonSwitchPipChannel);
         this.imageButtonPip = (ImageButton)findViewById(R.id.imageButtonPip);
         this.imageButtonPause = (ImageButton) findViewById(R.id.imageButtonPause);
         this.myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
@@ -57,6 +59,30 @@ public class MainActivity extends AppCompatActivity {
         //Set toolbar as actionbar
         setSupportActionBar(myToolbar);
 
+
+        //SwitchPipChannel
+        if(singleton.getSwitchPipChannel() == true){
+            switchPipChannel.setText("Switch Main Channels");
+        }else{
+            switchPipChannel.setText("Switch PiP Channels");
+        }
+        switchPipChannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(singleton.getSwitchPipChannel() == true){
+                   // new HttpRequestAsync(httpReq).execute("showPip=0");
+                    singleton.setSwitchPipChannel(false);
+                    switchPipChannel.setText("Switch PiP Channels");
+                }
+                else{
+                   // new HttpRequestAsync(httpReq).execute("showPip=1");
+                    singleton.setSwitchPipChannel(true);
+                    switchPipChannel.setText("Switch Main Channels");
+                }
+            }
+        });
+
+
         //Pip Button
         if(singleton.getPip() == true){
             imageButtonPip.setImageResource(R.drawable.ic_close_pip);
@@ -72,7 +98,9 @@ public class MainActivity extends AppCompatActivity {
                     imageButtonPip.setImageResource(R.drawable.ic_open_pip);
                 }
                 else{
-                    new HttpRequestAsync(httpReq).execute("showPip=1");
+                    String chID = singleton.getAktPipChannel().getChannelIdentifier();
+                    Log.d("chID", chID);
+                    new HttpRequestAsync(httpReq).execute("showPip=1&channelPip=" + chID);
                     singleton.setPip(true);
                     imageButtonPip.setImageResource(R.drawable.ic_close_pip);
                 }
@@ -91,15 +119,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(singleton.getPaused() == true){
                     //task.execute("timeShiftPause=");
-                    new HttpRequestAsync(httpReq).execute("showPip=0");
+                    int offset = (int) (System.currentTimeMillis() - singleton.getTimeStopped())/1000;
+                    Log.d("zeit", "offset" + offset);
+                    new HttpRequestAsync(httpReq).execute("timeShiftPlay=" + offset);
                     //Resume
                     singleton.setPaused(false);
                     imageButtonPause.setImageResource(R.drawable.ic_pause);
                     //Image auf Pause
                 }else{
                     //task.execute("timeShiftPlay=0");
-
-                    new HttpRequestAsync(httpReq).execute("showPip=1");
+                    singleton.setTimeStopped(System.currentTimeMillis());
+                    new HttpRequestAsync(httpReq).execute("timeShiftPause=");
                     //Pause the tv
                     singleton.setPaused(true);
                     //Image auf Play
@@ -244,16 +274,28 @@ public class MainActivity extends AppCompatActivity {
         //Send request channel -1 to server
         //channelMain=PositionInListe
         //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);+
-        int prev = singleton.getAktChannel().getNummer() - 1;
+        if(singleton.getSwitchPipChannel() == true){
+            int prev = singleton.getAktPipChannel().getNummer() - 1;
+            if(prev < 0){
+                prev = singleton.getChannelList().size() - 1;
+                new HttpRequestAsync(httpReq).execute("channelPip=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+                singleton.setAktPipChannel(singleton.getChannelList().get(prev));
+            }else{
+                new HttpRequestAsync(httpReq).execute("channelPip=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+                singleton.setAktPipChannel(singleton.getChannelList().get(prev));
+            }
 
-        if(prev < 0){
-            prev =singleton.getChannelList().size() -1;
-            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
-            singleton.setAktChannel(singleton.getChannelList().get(prev));
-        }
-        else{
-            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
-            singleton.setAktChannel(singleton.getChannelList().get(prev));
+        }else {
+            int prev = singleton.getAktChannel().getNummer() - 1;
+
+            if (prev < 0) {
+                prev = singleton.getChannelList().size() - 1;
+                new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+                singleton.setAktChannel(singleton.getChannelList().get(prev));
+            } else {
+                new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+                singleton.setAktChannel(singleton.getChannelList().get(prev));
+            }
         }
 
     }
@@ -261,15 +303,27 @@ public class MainActivity extends AppCompatActivity {
     public void onClickNext(View view){
         //Send request channel +1 to server
         //channelMain=PositionInListe
+        if(singleton.getSwitchPipChannel() == true){
+            int next = singleton.getAktPipChannel().getNummer() +1;
+            if(next >= singleton.getChannelList().size()){
+                next = 0;
+                new HttpRequestAsync(httpReq).execute("channelPip=" + singleton.getChannelList().get(next).getChannelIdentifier());
+                singleton.setAktPipChannel(singleton.getChannelList().get(next));
+            }else{
+                new HttpRequestAsync(httpReq).execute("channelPip=" + singleton.getChannelList().get(next).getChannelIdentifier());
+                singleton.setAktPipChannel(singleton.getChannelList().get(next));
+            }
 
-        int next = singleton.getAktChannel().getNummer() + 1;
-        if(next >= singleton.getChannelList().size()) {
-            next = 0;
-            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
-            singleton.setAktChannel(singleton.getChannelList().get(next));
-        }else{
-            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
-            singleton.setAktChannel(singleton.getChannelList().get(next));
+        }else {
+            int next = singleton.getAktChannel().getNummer() + 1;
+            if (next >= singleton.getChannelList().size()) {
+                next = 0;
+                new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
+                singleton.setAktChannel(singleton.getChannelList().get(next));
+            } else {
+                new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
+                singleton.setAktChannel(singleton.getChannelList().get(next));
+            }
         }
 
     }

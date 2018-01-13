@@ -72,6 +72,7 @@ public class PowerActivity extends AppCompatActivity {
 
         //Set aktuelelr Channel zu 1. channel in liste
         singleton.setAktChannel(channelList.get(0));
+        singleton.setAktPipChannel(channelList.get(0));
         new HttpRequestAsync(this.httpReq).execute("standby=0&channelMain=" + singleton.getAktChannel().getChannelIdentifier());//&channelMain=8a
 
 

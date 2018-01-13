@@ -20,14 +20,15 @@ public class Singleton {
 
 
     private ArrayList<Channel> channelList;
-
+    private boolean switchPipChannel;
     private Channel aktChannel;
     private int volume = 50;
     private int seekBarVolumeProgress = 50;
     private boolean muted = false;
     private boolean paused = false;
     private boolean pip = false;
-
+    private long timeStopped;
+    private Channel aktPipChannel;
     public Channel getAktChannel() {
         return aktChannel;
     }
@@ -75,5 +76,29 @@ public class Singleton {
 
     public void setPip(boolean pip) {
         this.pip = pip;
+    }
+
+    public long getTimeStopped() {
+        return timeStopped;
+    }
+
+    public void setTimeStopped(long timeStopped) {
+        this.timeStopped = timeStopped;
+    }
+
+    public boolean getSwitchPipChannel() {
+        return switchPipChannel;
+    }
+
+    public void setSwitchPipChannel(boolean switchPipChannel) {
+        this.switchPipChannel = switchPipChannel;
+    }
+
+    public Channel getAktPipChannel() {
+        return aktPipChannel;
+    }
+
+    public void setAktPipChannel(Channel aktPipChannel) {
+        this.aktPipChannel = aktPipChannel;
     }
 }
