@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
 
-    ImageButton imageButtonPause, imageButtonMute;
+    ImageButton imageButtonPause, imageButtonMute, imageButtonPip;
     Toolbar myToolbar;
     SeekBar seekBarVolume;
 
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Initialisierung
+        this.imageButtonPip = (ImageButton)findViewById(R.id.imageButtonPip);
         this.imageButtonPause = (ImageButton) findViewById(R.id.imageButtonPause);
         this.myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         this.imageButtonMute = (ImageButton) findViewById(R.id.imageButtonMute);
@@ -55,6 +56,28 @@ public class MainActivity extends AppCompatActivity {
 
         //Set toolbar as actionbar
         setSupportActionBar(myToolbar);
+
+        //Pip Button
+        if(singleton.getPip() == true){
+            imageButtonPip.setImageResource(R.drawable.ic_close_pip);
+        }else{
+            imageButtonPip.setImageResource(R.drawable.ic_open_pip);
+        }
+        imageButtonPip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(singleton.getPip() == true){
+                    new HttpRequestAsync(httpReq).execute("showPip=0");
+                    singleton.setPip(false);
+                    imageButtonPip.setImageResource(R.drawable.ic_open_pip);
+                }
+                else{
+                    new HttpRequestAsync(httpReq).execute("showPip=1");
+                    singleton.setPip(true);
+                    imageButtonPip.setImageResource(R.drawable.ic_close_pip);
+                }
+            }
+        });
 
         //Pause Button
         if(singleton.getPaused() == true){

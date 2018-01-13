@@ -18,7 +18,7 @@ public class Singleton {
     }
 
 
-    private boolean pip = false;
+
     private ArrayList<Channel> channelList;
 
     private Channel aktChannel;
@@ -26,7 +26,7 @@ public class Singleton {
     private int seekBarVolumeProgress = 50;
     private boolean muted = false;
     private boolean paused = false;
-
+    private boolean pip = false;
 
     public Channel getAktChannel() {
         return aktChannel;
@@ -67,5 +67,13 @@ public class Singleton {
     }
     public boolean getPaused(){
         return this.paused;
+    }
+
+    public boolean getPip() {
+        return pip;
+    }
+
+    public void setPip(boolean pip) {
+        this.pip = pip;
     }
 }
