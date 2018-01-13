@@ -59,7 +59,7 @@ public class PowerActivity extends AppCompatActivity {
             for(int i = 0; i < channels.length(); i++) {
                 JSONObject channel = channels.getJSONObject(i);
                 Channel realChannel = new Channel(channel.getInt("frequency"), channel.getString("channel"), channel.getInt("quality"), channel.getString("program"), channel.getString("provider"));
-
+                realChannel.setNummer(i);
                 channelList.add(realChannel);
                 //Log.d("HAHA", realChannel.getProvider());
             }
@@ -71,7 +71,8 @@ public class PowerActivity extends AppCompatActivity {
         Log.d("luls", "i did this");
 
         new HttpRequestAsync(this.httpReq).execute("standby=0&channelMain=8a");//&channelMain=8a
-
+        //Set aktuelelr Channel zu 8a
+        singleton.setAktChannelNummer(0);
         // json = new HttpRequestAsync(this.httpReq).;
 
         Intent start_main_activity = new Intent(this, MainActivity.class);

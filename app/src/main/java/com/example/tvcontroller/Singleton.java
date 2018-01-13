@@ -20,10 +20,19 @@ public class Singleton {
 
 
     private ArrayList<Channel> channelList;
+    private int aktChannelNummer;
     private int volume = 50;
     private int seekBarVolumeProgress = 50;
     private boolean muted = false;
     private boolean paused = false;
+
+    public int getAktChannelNummer() {
+        return aktChannelNummer;
+    }
+
+    public void setAktChannelNummer(int aktChannelNummer) {
+        this.aktChannelNummer = aktChannelNummer;
+    }
 
     public ArrayList<Channel> getChannelList() {
         return channelList;

@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     HttpRequest httpReq;
     Singleton singleton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,12 +238,32 @@ public class MainActivity extends AppCompatActivity {
         //Send request channel -1 to server
         //channelMain=PositionInListe
         //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);
+        int prev = singleton.getAktChannelNummer() - 1;
+
+        if(prev < 0) {
+            prev = singleton.getChannelList().size()-1;
+            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+            singleton.setAktChannelNummer(prev);
+        }else{
+            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+            singleton.setAktChannelNummer(prev);
+        }
     }
 
     public void onClickNext(View view){
         //Send request channel +1 to server
         //channelMain=PositionInListe
-        //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);
+
+        int next = singleton.getAktChannelNummer() + 1;
+        if(next >= singleton.getChannelList().size()) {
+            next = 0;
+            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
+            singleton.setAktChannelNummer(next);
+        }else{
+            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
+            singleton.setAktChannelNummer(next);
+        }
+
     }
 
 

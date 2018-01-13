@@ -34,4 +34,5 @@ public class ChannelAdapter extends ArrayAdapter<Channel> {
         // Return the completed view to render on screen
         return convertView;
     }
+
 }

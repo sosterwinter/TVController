@@ -8,7 +8,7 @@ public class Channel {
     private int frequency;
     private String channelIdentifier;
     private int quality;
-
+    private int nummer;
 
 
     private String program;
@@ -19,6 +19,14 @@ public class Channel {
         this.quality = quality;
         this.program = program;
         this.provider = provider;
+    }
+
+    public int getNummer() {
+        return nummer;
+    }
+
+    public void setNummer(int nummer) {
+        this.nummer = nummer;
     }
 
     public int getFrequency() {
