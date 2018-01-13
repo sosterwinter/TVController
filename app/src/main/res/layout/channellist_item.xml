@@ -16,6 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_weight="1"
-        app:srcCompat="@id:" />
+        app:srcCompat="@drawable/ic_favorite_red" />
 
 </LinearLayout>
