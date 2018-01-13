@@ -18,20 +18,22 @@ public class Singleton {
     }
 
 
-
+    private boolean pip = false;
     private ArrayList<Channel> channelList;
-    private int aktChannelNummer;
+
+    private Channel aktChannel;
     private int volume = 50;
     private int seekBarVolumeProgress = 50;
     private boolean muted = false;
     private boolean paused = false;
 
-    public int getAktChannelNummer() {
-        return aktChannelNummer;
+
+    public Channel getAktChannel() {
+        return aktChannel;
     }
 
-    public void setAktChannelNummer(int aktChannelNummer) {
-        this.aktChannelNummer = aktChannelNummer;
+    public void setAktChannel(Channel aktChannel) {
+        this.aktChannel = aktChannel;
     }
 
     public ArrayList<Channel> getChannelList() {

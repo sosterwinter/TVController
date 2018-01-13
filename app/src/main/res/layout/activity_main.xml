@@ -56,25 +56,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonMute"
         app:srcCompat="@drawable/ard_little" />
-<!--
-    <ImageButton
-<<<<<<< HEAD
-        android:id="@+id/imageButtonPause"
-        android:contentDescription="@string/button_pause"
-=======
-        android:id="@+id/imageButtonMute"
->>>>>>> 35a8edd260c587973dffc8b47faf720ab948d9af
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:onClick="onClickPause"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        app:srcCompat="@drawable/ic_pause" />
-        -->
+
     <ImageButton
         android:id="@+id/imageButtonPause"
         android:layout_width="wrap_content"
@@ -116,28 +98,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6"
         app:srcCompat="@drawable/ic_prev" />
-
-    <HorizontalScrollView
-        android:id="@+id/FavoritesScrollbar"
-        android:layout_width="382dp"
-        android:layout_height="97dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:contentDescription="@string/favorite_scrollview"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonNext">
-
-        <LinearLayout
-            android:id="@+id/favoriteLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/favorite_layout"
-            android:orientation="horizontal" />
-
-    </HorizontalScrollView>
 
 </android.support.constraint.ConstraintLayout>

@@ -45,7 +45,7 @@ public class Channellist extends AppCompatActivity {
                 Channel channel = channelList.get(position);
                 String channelID = channel.getChannelIdentifier();
                 Log.d("HEHE", channelID);
-                singleton.setAktChannelNummer(channel.getNummer());
+                singleton.setAktChannel(channel);
                 new HttpRequestAsync(httpReq).execute("channelMain=" + channelID);
             }
         });

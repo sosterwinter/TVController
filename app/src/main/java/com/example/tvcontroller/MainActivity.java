@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
     //Creating member variables
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
-    //private boolean paused = false, muted = false;
+
     ImageButton imageButtonPause, imageButtonMute;
     Toolbar myToolbar;
     SeekBar seekBarVolume;
-    //Channel aktChannel;
+
     HttpRequest httpReq;
     Singleton singleton;
 
@@ -113,24 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        /*
-        //Toggle Button
-        final ToggleButton myToggleButton = (ToggleButton)findViewById(R.id.toggleButtonMute);
-        myToggleButton.setChecked(true);
-        myToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    //Toast.makeText(MainActivity.this, "Unmuted", Toast.LENGTH_SHORT).show();
-                } else {
-                    // The toggle is disabled
-                    Toast.makeText(MainActivity.this, "Muted", Toast.LENGTH_SHORT).show();
 
-                }
-            }
-
-        });
-        */
         //Setting up Seekbar Listener
 
 
@@ -237,31 +220,33 @@ public class MainActivity extends AppCompatActivity {
     public void onClickPrev(View view){
         //Send request channel -1 to server
         //channelMain=PositionInListe
-        //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);
-        int prev = singleton.getAktChannelNummer() - 1;
+        //new HttpRequestAsync(httpReq).execute("channelMain=" + aktChannel.getNummer()-1);+
+        int prev = singleton.getAktChannel().getNummer() - 1;
 
-        if(prev < 0) {
-            prev = singleton.getChannelList().size()-1;
+        if(prev < 0){
+            prev =singleton.getChannelList().size() -1;
             new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
-            singleton.setAktChannelNummer(prev);
-        }else{
-            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
-            singleton.setAktChannelNummer(prev);
+            singleton.setAktChannel(singleton.getChannelList().get(prev));
         }
+        else{
+            new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(prev).getChannelIdentifier());
+            singleton.setAktChannel(singleton.getChannelList().get(prev));
+        }
+
     }
 
     public void onClickNext(View view){
         //Send request channel +1 to server
         //channelMain=PositionInListe
 
-        int next = singleton.getAktChannelNummer() + 1;
+        int next = singleton.getAktChannel().getNummer() + 1;
         if(next >= singleton.getChannelList().size()) {
             next = 0;
             new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
-            singleton.setAktChannelNummer(next);
+            singleton.setAktChannel(singleton.getChannelList().get(next));
         }else{
             new HttpRequestAsync(httpReq).execute("channelMain=" + singleton.getChannelList().get(next).getChannelIdentifier());
-            singleton.setAktChannelNummer(next);
+            singleton.setAktChannel(singleton.getChannelList().get(next));
         }
 
     }
