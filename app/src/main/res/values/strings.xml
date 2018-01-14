@@ -7,6 +7,8 @@
     <string name="manage_favorites">Manage favorites</string>
     <string name="my_toolbar">Toolbar</string>
 
+    <string name="favlistfile">favlist.txt</string>
+    <string name="favnumber">0</string>
 
     <string name="channel_pic">Channel picture</string>
     <string name="button_pause">Pause Button</string>
