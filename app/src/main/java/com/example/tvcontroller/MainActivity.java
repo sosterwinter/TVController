@@ -26,6 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     Button switchPipChannel;
     HttpRequest httpReq;
     Singleton singleton;
-
+    ArrayList<Channel> favoriteList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         this.myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         this.imageButtonMute = (ImageButton) findViewById(R.id.imageButtonMute);
         this.seekBarVolume = (SeekBar)findViewById(R.id.seekBar1);
+        this.favoriteList = new ArrayList<Channel>();
+
         this.httpReq = new HttpRequest("10.0.2.2", 1000, false);
         //this.task = new HttpRequestAsync(this.httpReq);
         this.singleton = Singleton.getInstance();
@@ -238,9 +241,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_favorite:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                Intent intent_favorite = new Intent(this, favorite.class);
+                if(singleton.getFavoriteList() == null){
+                    favoriteList.add(singleton.getAktChannel());
+                    singleton.setFavoriteList(favoriteList);
+                }else{
+                    singleton.getFavoriteList().add(singleton.getAktChannel());
+                }
+                //singleton.getFavoriteList().add(singleton.getAktChannel());
 
-                startActivity(intent_favorite);
 
                 return true;
 
@@ -269,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.managefavorites:
 
-                Intent intent_managefavorites = new Intent (this, managefavorites.class);
+                Intent intent_managefavorites = new Intent (this, favorite.class);
                 startActivity(intent_managefavorites);
 
             default:

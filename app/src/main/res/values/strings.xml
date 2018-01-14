@@ -4,7 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_channellist">Channellist</string>
     <string name="power_off">Shut Down</string>
-    <string name="manage_favorites">Manage favorites</string>
+    <string name="manage_favorites">Favoritelist</string>
     <string name="my_toolbar">Toolbar</string>
 
     <string name="favlistfile">favlist.txt</string>

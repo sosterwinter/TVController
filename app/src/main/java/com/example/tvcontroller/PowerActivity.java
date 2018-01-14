@@ -60,12 +60,13 @@ public class PowerActivity extends AppCompatActivity {
                 JSONObject channel = channels.getJSONObject(i);
                 Channel realChannel = new Channel(channel.getInt("frequency"), channel.getString("channel"), channel.getInt("quality"), channel.getString("program"), channel.getString("provider"));
                 realChannel.setNummer(i);
+
                 channelList.add(realChannel);
                 //Log.d("HAHA", realChannel.getProvider());
             }
         }
         singleton.setChannelList(channelList);
-
+       // singleton.setFavoriteList(channelList);
         Log.d("LUL", singleton.getChannelList().get(1).getProvider());
 
         Log.d("luls", "i did this");

@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonMute"
-        app:srcCompat="@drawable/ard_little" />
+        app:srcCompat="@drawable/controller" />
 
     <ImageButton
         android:id="@+id/imageButtonPause"

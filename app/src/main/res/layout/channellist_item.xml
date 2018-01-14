@@ -6,16 +6,10 @@
 
     <TextView
         android:id="@+id/programName"
-        android:layout_width="324dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Name"
         android:textAlignment="center"
         android:textSize="24sp" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_weight="1"
-        app:srcCompat="@drawable/ic_favorite_red" />
 
 </LinearLayout>

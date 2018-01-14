@@ -20,6 +20,7 @@ public class Singleton {
 
 
     private ArrayList<Channel> channelList;
+    private ArrayList<Channel> favoriteList;
     private boolean switchPipChannel;
     private Channel aktChannel;
     private int volume = 50;
@@ -100,5 +101,13 @@ public class Singleton {
 
     public void setAktPipChannel(Channel aktPipChannel) {
         this.aktPipChannel = aktPipChannel;
+    }
+
+    public ArrayList<Channel> getFavoriteList() {
+        return favoriteList;
+    }
+
+    public void setFavoriteList(ArrayList<Channel> favoriteList) {
+        this.favoriteList = favoriteList;
     }
 }
