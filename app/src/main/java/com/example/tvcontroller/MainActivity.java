@@ -19,6 +19,14 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class MainActivity extends AppCompatActivity {
 
     //Creating member variables
@@ -31,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     Button switchPipChannel;
     HttpRequest httpReq;
     Singleton singleton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         this.httpReq = new HttpRequest("10.0.2.2", 1000, false);
         //this.task = new HttpRequestAsync(this.httpReq);
         this.singleton = Singleton.getInstance();
+        String filename;
         //Initialisierung
 
         //TV-Server initialisieren
@@ -204,6 +212,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
